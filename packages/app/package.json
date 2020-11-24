@@ -1,0 +1,27 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "philberesford <philberesford@users.noreply.github.com>",
+  "homepage": "https://github.com/philberesford/photo-tracing/tree/master/packages/app#readme",
+  "license": "ISC",
+  "main": "src/app.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philberesford/photo-tracing.git"
+  },
+  "scripts": {
+    "start": "node ./lib/main.js",
+    "tsc": "tsc",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/philberesford/photo-tracing/issues"
+  }
+}
