@@ -19,7 +19,7 @@
   "scripts": {
     "start": "node ./lib/main.js",
     "tsc": "tsc",
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "ts-mocha -p ./tsconfig.json src/**/*.test.ts"
   },
   "bugs": {
     "url": "https://github.com/philberesford/photo-tracing/issues"
