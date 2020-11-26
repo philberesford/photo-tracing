@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "echo \"No tests configured\""
+    "test": "ts-mocha -p ./tsconfig.json src/**/*.test.ts"
   },
   "bugs": {
     "url": "https://github.com/philberesford/photo-tracing/issues"
