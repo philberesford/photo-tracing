@@ -1,7 +1,27 @@
 import { expect } from 'chai';
+import { Dimension } from './Dimension';
+import {getMaxScalingFactor} from './resize';
 
-describe('Resize tests', () => { 
-    it('Tests run', () => { 
-        expect(1).to.be.equal(1); 
+describe('getMaxScalingFactor', () => { 
+    it('Throws when from width < 0', () => {  
+        const from: Dimension = {
+            heightMm: 1,
+            widthMm: -1
+        };
+
+        const func = () => getMaxScalingFactor(from, "A4");
+        
+        expect(func).to.throw; 
+    });
+
+    it('Throws when from height < 0', () => {  
+        const from: Dimension = {
+            heightMm: -1,
+            widthMm: 1
+        };
+
+        const func = () => getMaxScalingFactor(from, "A4");
+        
+        expect(func).to.throw; 
     });
 });

@@ -1,15 +1,10 @@
-interface Dimension {
-    width: number;
-    height: number;
-}
+import { Dimension } from "./Dimension";
+import { PaperSize } from "./PaperDimensions"
+import { Throw } from 'utilities';
 
-const PaperDimension = {
-    A4: {width: 210, height: 297},
-    A3: {width: 297, height: 420},
-}
+export const getMaxScalingFactor = (from: Dimension, to: PaperSize): number => {
+    Throw.if(from.heightMm < 0, 'From height must be greater than zero.');
+    Throw.if(from.widthMm < 0, 'From width must be greater than zero.');
 
-type PaperSize = keyof typeof PaperDimension;
-
-export const scaleTo = (from: Dimension, to: PaperSize): Dimension => {
-    return from;
+    return 2;
 }

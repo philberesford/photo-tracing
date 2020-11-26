@@ -1,30 +1,25 @@
 {
-  "name": "app",
+  "name": "utilities",
   "version": "1.0.0",
   "description": "> TODO: description",
   "author": "philberesford <philberesford@users.noreply.github.com>",
-  "homepage": "https://github.com/philberesford/photo-tracing/tree/master/packages/app#readme",
   "license": "ISC",
-  "main": "src/app.ts",
+  "main": "lib/util.js",
   "directories": {
     "lib": "lib"
   },
   "files": [
-    "lib"
+    "src"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/philberesford/photo-tracing.git"
   },
   "scripts": {
-    "start": "node ./lib/main.js",
     "build": "tsc",
-    "test": "ts-mocha -p ./tsconfig.json src/**/*.test.ts"
+    "test": "echo \"No tests configured\""
   },
   "bugs": {
     "url": "https://github.com/philberesford/photo-tracing/issues"
-  },
-  "dependencies": {
-    "utilities": "^1.0.0"
   }
 }
