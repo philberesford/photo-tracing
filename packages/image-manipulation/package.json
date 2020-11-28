@@ -1,0 +1,29 @@
+{
+  "name": "image-manipulation",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "philberesford <philberesford@users.noreply.github.com>",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philberesford/photo-tracing.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "ts-mocha -p ./tsconfig.json src/**/*.test.ts"
+  },
+  "bugs": {
+    "url": "https://github.com/philberesford/photo-tracing/issues"
+  },
+  "dependencies": {
+    "canny-edge-detector": "^1.0.0",
+    "image-js": "^0.31.1"
+  }
+}
