@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { imageTransform } from './image';
+import { imageTransform } from './imageTransform';
 
 describe('Image', () => { 
     it('Loads an image', async () => { 
