@@ -1,15 +1,36 @@
-import Link from 'next/link'
 import Layout from '../components/Layout'
+import React, { useState } from 'react';
 
 const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
+
+  <Layout title="Photo tracing">
+    <h1>Photo tracing</h1>
     <p>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
+      <ImagePicker />
     </p>
   </Layout>
-)
+);
 
-export default IndexPage
+const ImagePicker = () => {
+  const [imgSrc, setImgSrc] = useState(0);
+  
+  const fileChanged = (args) => { 
+    const file = (args.target?.files && args.target?.files.length > 0) ? args.target?.files[0] : null; 
+    const reader = new FileReader();
+    reader.addEventListener("load", () => setImgSrc(reader.result), false)
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+};
+
+  return (
+    <>
+      <input type="file" onChange={fileChanged} />
+      <br />
+      <img src={imgSrc} height="200" alt="Image preview..." />
+    </>
+  );
+}
+
+export default IndexPage;
