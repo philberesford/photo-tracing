@@ -16,7 +16,8 @@ export const image = () => {
             };
 
             const edge = grey.cannyEdge(options);
-            await edge.save('C:\\sample-just-edges.jpg');
+            const inverted = edge.invert();
+            await inverted.save('C:\\sample-just-edges.jpg');
         
             console.log('saved');
             return;
