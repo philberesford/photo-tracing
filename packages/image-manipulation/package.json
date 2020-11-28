@@ -23,7 +23,6 @@
     "url": "https://github.com/philberesford/photo-tracing/issues"
   },
   "dependencies": {
-    "canny-edge-detector": "^1.0.0",
     "image-js": "^0.31.1"
   }
 }

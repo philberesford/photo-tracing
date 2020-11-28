@@ -1,7 +1,4 @@
 import Image from 'image-js';
-
-// TODO Figure out how to make this TS error disappear
-const cannyEdgeDetector = require('canny-edge-detector');
  
 export const image = () => {
     let imgRef: any = null;
@@ -11,9 +8,16 @@ export const image = () => {
         },
         findEdges: async (): Promise<any> => {
             const grey = imgRef.grey();
-            const edge = cannyEdgeDetector(grey);
-            console.log(edge);
+            const options = {
+                lowThreshold: 50,
+                highThreshold: 100,
+                gaussianBlur: 1.4
+                //brightness: imageRef.maxValue
+            };
+
+            const edge = grey.cannyEdge(options);
             await edge.save('C:\\sample-just-edges.jpg');
+        
             console.log('saved');
             return;
         }
