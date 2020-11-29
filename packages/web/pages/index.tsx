@@ -20,7 +20,10 @@ const ImagePicker = () => {
     setImgSource(imageSource);
     
     const image = await imageTransform().load(imageSource);
-    const edges = image.findEdges().toImage().toDataURL();
+    const edges = image.findEdges()
+                       .invert()
+                       .toImage()
+                       .toDataURL();
     setEdgesSource(edges);
   };
 
