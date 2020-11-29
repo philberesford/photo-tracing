@@ -3,7 +3,6 @@ import { imageTransform } from 'image-manipulation/lib/imageTransform'; // TODO 
 import React, { useState } from 'react';
 
 const IndexPage = () => (
-
   <Layout title="Photo tracing">
     <h1>Photo tracing</h1>
     <p>
@@ -41,8 +40,8 @@ const ImagePicker = () => {
     <>
       <input type="file" onChange={fileChanged} />
       <br />
-      <img src={imgSrc} height="200" alt="Image preview..." />
-      <img src={edgesSrc} height="200" alt="Image preview..." />
+      <img src={imgSrc} style={{height: 200}} alt="Image preview..." />
+      <img src={edgesSrc} style={{height: '20cm'}} alt="Image preview..." />
     </>
   );
 }
