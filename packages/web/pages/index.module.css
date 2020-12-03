@@ -1,0 +1,32 @@
+/**
+For cropping, reference: https://www.digitalocean.com/community/tutorials/css-cropping-images-object-fithttps://www.digitalocean.com/community/tutorials/css-cropping-images-object-fit
+*/
+
+.printedPage {
+  display: block;
+}
+
+.a3FirstImage {  
+  --rotateBy: 90deg;
+  -webkit-transform:rotate(var(--rotateBy));
+  -moz-transform: rotate(var(--rotateBy));
+  -ms-transform: rotate(var(--rotateBy));
+  -o-transform: rotate(var(--rotateBy));
+  transform: rotate(var(--rotateBy));    
+  object-fit: cover;
+  object-position: 0% 0;
+  height: 297mm
+}
+
+.a3SecondImage {  
+  --rotateBy: 90deg;
+  -webkit-transform:rotate(var(--rotateBy));
+  -moz-transform: rotate(var(--rotateBy));
+  -ms-transform: rotate(var(--rotateBy));
+  -o-transform: rotate(var(--rotateBy));
+  transform: rotate(var(--rotateBy));
+
+  object-fit: cover;
+  object-position: 100% 0;
+  height: 297mm
+}

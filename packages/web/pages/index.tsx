@@ -1,5 +1,8 @@
 import Layout from '../components/Layout';
 import { imageTransform } from 'image-manipulation/lib/imageTransform'; // TODO figure out how to have the TypeScript loaders work with WebPack
+import { PaperDimensions } from 'image-manipulation/lib/PaperDimensions';
+import styles from './index.module.css';
+
 import React, { useState } from 'react';
 
 const IndexPage = () => (
@@ -41,7 +44,13 @@ const ImagePicker = () => {
       <input type="file" onChange={fileChanged} />
       <br />
       <img src={imgSrc} style={{height: 200}} alt="Image preview..." />
-      <img src={edgesSrc} style={{height: '20cm'}} alt="Image preview..." />
+      <br />
+      <div className={styles.printedPage} style={{width: PaperDimensions.A4.height+'mm'}}>
+        <img className={styles.a3FirstImage} src={edgesSrc} style={{width: PaperDimensions.A4.height+'mm'}} alt="First half" />
+      </div>
+      <div className={styles.printedPage} style={{width: PaperDimensions.A4.height+'mm'}}>
+        <img className={styles.a3SecondImage  + " " + styles.printable} src={edgesSrc} style={{width: PaperDimensions.A4.height+'mm'}} alt="Second half" />
+      </div>
     </>
   );
 }
