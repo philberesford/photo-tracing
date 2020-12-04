@@ -29,6 +29,7 @@ export type ImageTransform = {
     resize(options: ResizeOptions): ImageTransform;
     rotate(optoins: RotateOptions): ImageTransform;
     save(path: string): Promise<ImageTransform>;
+    toDataUrl(): string;
     toImage(): Image;
 };
 
@@ -59,6 +60,7 @@ export const imageTransform = (image?: Image): ImageTransform => {
             await image.save(path)
             return imageTransform(image);
         },
+        toDataUrl: () => image.toDataURL(),
         toGrey: () => imageTransform(image.grey()),
         toImage: () => image   
     }; 

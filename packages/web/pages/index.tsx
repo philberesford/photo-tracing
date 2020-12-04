@@ -24,8 +24,7 @@ const ImagePicker = () => {
     const image = await imageTransform().load(imageSource);
     const edges = image.findEdges()
                        .invert()
-                       .toImage()
-                       .toDataURL();
+                       .toDataUrl();
     setEdgesSource(edges);
   };
 
