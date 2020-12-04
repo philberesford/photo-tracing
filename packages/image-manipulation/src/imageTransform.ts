@@ -1,28 +1,43 @@
-import Image from 'image-js';
+import Image, { CropOptions as CropOptionsImage, ResizeOptions as ResizeOptionsImage } from 'image-js';
 
-type EdgeOptions = {
+export type EdgeOptions = {
     lowThreshold?: number,
     highThreshold?: number,
     gaussianBlur?: number
     brightness?: number
 };
 
-type ImageTransform = {
+export type CropOptions = CropOptionsImage;
+
+export type ResizeOptions = {
+  width?: number;
+  height?: number;
+  factor?: number;
+  preserveAspectRatio?: boolean;
+};
+
+export type RotateOptions = {
+    angle: number;
+};
+
+export type ImageTransform = {
+    crop(options: CropOptions): ImageTransform;
     load(path: string): Promise<ImageTransform>;
     toGrey(): ImageTransform;
     invert(): ImageTransform;
-    findEdges(edgeOptions?: EdgeOptions): ImageTransform;
+    findEdges(options?: EdgeOptions): ImageTransform;
+    resize(options: ResizeOptions): ImageTransform;
+    rotate(optoins: RotateOptions): ImageTransform;
     save(path: string): Promise<ImageTransform>;
     toImage(): Image;
 };
 
 export const imageTransform = (image?: Image): ImageTransform => {
-    return {        
-        load: async (path: string): Promise<ImageTransform> => imageTransform(await Image.load(path)),
-        toGrey: () => imageTransform(image.grey()),
-        invert: (): ImageTransform => imageTransform(image.invert()),
+    return {    
+        crop: (options: CropOptions): ImageTransform => {
+            return imageTransform(image.crop(options));
+        },     
         findEdges: (edgeOptions?: EdgeOptions): ImageTransform => {
-            debugger;
             const grey = image.grey();
             const defaultEdgeOptions = {
                 lowThreshold: 50,
@@ -31,11 +46,20 @@ export const imageTransform = (image?: Image): ImageTransform => {
             };
             const options = edgeOptions ? edgeOptions : defaultEdgeOptions;
             return imageTransform((grey as any).cannyEdge(options));            
-        },     
+        },
+        invert: (): ImageTransform => imageTransform(image.invert()),
+        load: async (path: string): Promise<ImageTransform> => imageTransform(await Image.load(path)),        
+        resize: (options: ResizeOptionsImage): ImageTransform => {
+            return imageTransform(image.resize(options));
+        },
+        rotate: (options: RotateOptions): ImageTransform => {
+            return imageTransform(image.rotate(options.angle));        
+        },
         save: async (path: string): Promise<ImageTransform> => {
             await image.save(path)
             return imageTransform(image);
         },
+        toGrey: () => imageTransform(image.grey()),
         toImage: () => image   
     }; 
 };
