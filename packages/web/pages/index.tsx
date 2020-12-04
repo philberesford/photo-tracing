@@ -16,7 +16,8 @@ const IndexPage = () => (
 
 const ImagePicker = () => {
   const [imgSrc, setImgSource] = useState(null as any);
-  const [edgesSrc, setEdgesSource] = useState(null as any);
+  const [firstHalfSrc, setFirstHalfSource] = useState(null as any);
+  const [secondHalfSrc, setSecondHalfSource] = useState(null as any);
   
   const imageSelected = async (imageSource: any) => {   
     setImgSource(imageSource);
@@ -24,8 +25,14 @@ const ImagePicker = () => {
     const image = await imageTransform().load(imageSource);
     const edges = image.findEdges()
                        .invert()
-                       .toDataUrl();
-    setEdgesSource(edges);
+                       .toImage()
+    
+    const midPoint = edges.width/2;
+    const firstHalf = edges.crop({width: midPoint}).toDataURL();                                           
+    const secondHalf = edges.crop({x: midPoint}).toDataURL();                                           
+
+    setFirstHalfSource(firstHalf);
+    setSecondHalfSource(secondHalf);
   };
 
   const fileChanged = (args: any) => { 
@@ -44,11 +51,11 @@ const ImagePicker = () => {
       <br />
       <img src={imgSrc} style={{height: 200}} alt="Image preview..." />
       <br />
-      <div className={styles.printedPage} style={{width: PaperDimensions.A4.height+'mm'}}>
-        <img className={styles.a3FirstImage} src={edgesSrc} style={{width: PaperDimensions.A4.height+'mm'}} alt="First half" />
+      <div className={styles.printedPage} style={{height: PaperDimensions.A4.height/2+'mm'}}>
+        <img className={styles.a3FirstImage} src={firstHalfSrc} alt="First half" />
       </div>
-      <div className={styles.printedPage} style={{width: PaperDimensions.A4.height+'mm'}}>
-        <img className={styles.a3SecondImage  + " " + styles.printable} src={edgesSrc} style={{width: PaperDimensions.A4.height+'mm'}} alt="Second half" />
+      <div className={styles.printedPage} style={{height: PaperDimensions.A4.height/2+'mm'}}>
+        <img className={styles.a3SecondImage} src={secondHalfSrc} alt="Second half" />
       </div>
     </>
   );
