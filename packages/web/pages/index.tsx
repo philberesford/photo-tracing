@@ -19,20 +19,37 @@ const ImagePicker = () => {
   const [firstHalfSrc, setFirstHalfSource] = useState(null as any);
   const [secondHalfSrc, setSecondHalfSource] = useState(null as any);
   
+  const isLandscape = (width: number, height: number) => {
+    return width > height;    
+  };
+
   const imageSelected = async (imageSource: any) => {   
     setImgSource(imageSource);
     
     const image = await imageTransform().load(imageSource);
+
+    const { width, height } = image.meta();
+
     const edges = image.findEdges()
                        .invert()
                        .toImage()
-    
-    const midPoint = edges.width/2;
-    const firstHalf = edges.crop({width: midPoint}).toDataURL();                                           
-    const secondHalf = edges.crop({x: midPoint}).toDataURL();                                           
+
+    let firstHalf = "";
+    let secondHalf = "";
+
+    if (isLandscape(width, height)) {
+      const midPoint = edges.width/2;
+      firstHalf = edges.crop({width: midPoint}).toDataURL();                                           
+      secondHalf = edges.crop({x: midPoint}).toDataURL();                                           
+    } else {
+      const midPoint = edges.height/2;
+      firstHalf = edges.crop({height: midPoint}).toDataURL();                                           
+      secondHalf = edges.crop({y: midPoint}).toDataURL();
+    }
 
     setFirstHalfSource(firstHalf);
-    setSecondHalfSource(secondHalf);
+    setSecondHalfSource(secondHalf);     
+
   };
 
   const fileChanged = (args: any) => { 

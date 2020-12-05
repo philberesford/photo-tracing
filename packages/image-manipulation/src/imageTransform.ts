@@ -1,5 +1,10 @@
 import Image, { CropOptions as CropOptionsImage, ResizeOptions as ResizeOptionsImage } from 'image-js';
 
+export type MetaInformation = {
+    width: number,
+    height: number
+}
+
 export type EdgeOptions = {
     lowThreshold?: number,
     highThreshold?: number,
@@ -26,6 +31,7 @@ export type ImageTransform = {
     toGrey(): ImageTransform;
     invert(): ImageTransform;
     findEdges(options?: EdgeOptions): ImageTransform;
+    meta(): MetaInformation;
     resize(options: ResizeOptions): ImageTransform;
     rotate(optoins: RotateOptions): ImageTransform;
     save(path: string): Promise<ImageTransform>;
@@ -49,7 +55,13 @@ export const imageTransform = (image?: Image): ImageTransform => {
             return imageTransform((grey as any).cannyEdge(options));            
         },
         invert: (): ImageTransform => imageTransform(image.invert()),
-        load: async (path: string): Promise<ImageTransform> => imageTransform(await Image.load(path)),        
+        load: async (path: string): Promise<ImageTransform> => imageTransform(await Image.load(path)), 
+        meta: (): MetaInformation => {
+            return {
+                width: image.width, 
+                height: image.height
+            };
+        },       
         resize: (options: ResizeOptionsImage): ImageTransform => {
             return imageTransform(image.resize(options));
         },
