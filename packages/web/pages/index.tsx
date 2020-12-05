@@ -63,18 +63,22 @@ const ImagePicker = () => {
 };
 
   return (
-    <>
-      <input type="file" onChange={fileChanged} />
-      <br />
-      <img src={imgSrc} style={{height: 200}} alt="Image preview..." />
-      <br />
-      <div className={styles.printedPage} style={{height: PaperDimensions.A4.height/2+'mm'}}>
-        <img className={styles.a3FirstImage} src={firstHalfSrc} alt="First half" />
+    <div className="loadingContainer">
+      <div className={styles.loader}>
+        <input type="file" onChange={fileChanged} />
+        <br />
+        <img src={imgSrc} style={{height: 200}} alt="Image preview..." />
+        <br />
       </div>
-      <div className={styles.printedPage} style={{height: PaperDimensions.A4.height/2+'mm'}}>
-        <img className={styles.a3SecondImage} src={secondHalfSrc} alt="Second half" />
+      <div className="results">
+        <div className={styles.printedPage} style={{height: PaperDimensions.A4.height/2+'mm'}}>
+          <img className={styles.a3FirstImage} src={firstHalfSrc} alt="First half" />
+        </div>
+        <div className={styles.printedPage} style={{height: PaperDimensions.A4.height/2+'mm'}}>
+          <img className={styles.a3SecondImage} src={secondHalfSrc} alt="Second half" />
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 

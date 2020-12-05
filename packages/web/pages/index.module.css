@@ -2,16 +2,29 @@
 For cropping, reference: https://www.digitalocean.com/community/tutorials/css-cropping-images-object-fithttps://www.digitalocean.com/community/tutorials/css-cropping-images-object-fit
 */
 
-.printedPage {
-  display: inline;
-  border: 1px solid red;
-  padding-right: 3px;
+@media screen {
+  .printedPage {
+    display: inline;
+    border: 1px solid red;
+    padding-right: 3px;
+  }
 }
 
-.a3FirstImage {  
+@media print {
+  .loader {
+    display: none;
+  }
 
+  .a3FirstImage {  
+    width: 100%;
+  }
+  
+  .a3SecondImage {  
+    width: 100%;
+  }  
+
+  .printedPage {
+    page-break-after: always;
+  }
 }
 
-.a3SecondImage {  
-
-}
