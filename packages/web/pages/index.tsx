@@ -30,7 +30,7 @@ const ImagePicker = () => {
   const [imgSrc, setImgSource] = useState(null as any);
   const [firstHalfSrc, setFirstHalfSource] = useState(null as any);
   const [secondHalfSrc, setSecondHalfSource] = useState(null as any);
-  const [transformState, setTransformState] = useState('edges' as any);
+  const [transformState, setTransformState] = useState('grey' as any);
   
   const [printButtonClasses, setPrintButtonClasses] = useState(styles.visiblyhidden as any);
   
@@ -50,7 +50,10 @@ const ImagePicker = () => {
     }   
 
     const { width, height } = image.meta();
-    const outputImage = (transform === 'edges') ? image.findEdges().invert().toImage() : image.toGrey().toImage();
+    const outputImage = (transform === 'edges') ? image.findEdges({
+      lowThreshold: 40,
+      highThreshold: 50,      
+    }).invert().toImage() : image.toGrey().toImage();
     
     let firstHalf = "";
     let secondHalf = "";
