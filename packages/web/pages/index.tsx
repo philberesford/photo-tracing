@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 
 const IndexPage = () => (
   <Layout title="Photo tracing">
-    <div className={styles.heading}>
+    <div className={styles.noprint}>
       <h1>Photo tracing</h1>
     </div>
     <ImagePicker />    
@@ -18,6 +18,7 @@ const ImagePicker = () => {
   const [imgSrc, setImgSource] = useState(null as any);
   const [firstHalfSrc, setFirstHalfSource] = useState(null as any);
   const [secondHalfSrc, setSecondHalfSource] = useState(null as any);
+  const [printButtonClasses, setPrintButtonClasses] = useState(styles.visiblyhidden as any);
   
   const isLandscape = (width: number, height: number) => {
     return width > height;    
@@ -47,9 +48,9 @@ const ImagePicker = () => {
       secondHalf = edges.crop({y: midPoint}).toDataURL();
     }
 
+    setPrintButtonClasses({});
     setFirstHalfSource(firstHalf);
     setSecondHalfSource(secondHalf);     
-
   };
 
   const fileChanged = (args: any) => { 
@@ -64,15 +65,16 @@ const ImagePicker = () => {
 
   return (
     <>
-      <div className={styles.loadingContainer}>
+      <div className={styles.noprint}>
         <div className={styles.loader}>
-          <input type="file" onChange={fileChanged} />
+          <input type="file" onChange={fileChanged} /><button className={printButtonClasses} onClick={() => window.print()}>Print result</button>
           <br />
-          <br />
-        <img src={imgSrc} style={{height: 200}} alt="" />
+          <br />          
+          <img src={imgSrc} style={{height: 200}} alt="" />
         </div>        
+        
       </div>
-      <div className="results">        
+      <div className="results">      
         <div className={styles.printedPage} style={{height: PaperDimensions.A4.height/2+'mm'}}>
           <img className={styles.a3FirstImage} src={firstHalfSrc} alt="" />
         </div>
