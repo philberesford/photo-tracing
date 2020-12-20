@@ -7,10 +7,10 @@ import React, { useState } from 'react';
 
 const IndexPage = () => (
   <Layout title="Photo tracing">
-    <h1>Photo tracing</h1>
-    <p>
-      <ImagePicker />
-    </p>
+    <div className={styles.heading}>
+      <h1>Photo tracing</h1>
+    </div>
+    <ImagePicker />    
   </Layout>
 );
 
@@ -63,22 +63,24 @@ const ImagePicker = () => {
 };
 
   return (
-    <div className="loadingContainer">
-      <div className={styles.loader}>
-        <input type="file" onChange={fileChanged} />
-        <br />
-        <img src={imgSrc} style={{height: 200}} alt="Image preview..." />
-        <br />
+    <>
+      <div className={styles.loadingContainer}>
+        <div className={styles.loader}>
+          <input type="file" onChange={fileChanged} />
+          <br />
+          <br />
+        <img src={imgSrc} style={{height: 200}} alt="" />
+        </div>        
       </div>
-      <div className="results">
+      <div className="results">        
         <div className={styles.printedPage} style={{height: PaperDimensions.A4.height/2+'mm'}}>
-          <img className={styles.a3FirstImage} src={firstHalfSrc} alt="First half" />
+          <img className={styles.a3FirstImage} src={firstHalfSrc} alt="" />
         </div>
         <div className={styles.printedPage} style={{height: PaperDimensions.A4.height/2+'mm'}}>
-          <img className={styles.a3SecondImage} src={secondHalfSrc} alt="Second half" />
+          <img className={styles.a3SecondImage} src={secondHalfSrc} alt="" />
         </div>
       </div>
-    </div>
+    </>    
   );
 }
 

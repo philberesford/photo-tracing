@@ -1,18 +1,18 @@
-/**
-For cropping, reference: https://www.digitalocean.com/community/tutorials/css-cropping-images-object-fithttps://www.digitalocean.com/community/tutorials/css-cropping-images-object-fit
-*/
+@media screen {  
+  /* Hide all images that don't have a source specified */
+  .results img[src=] {
+    display: none;
+  }
 
-@media screen {
   .printedPage {
     display: inline;
-    border: 1px solid red;
     padding-right: 3px;
   }
 }
 
 @media print {
-  .loader {
-    display: none;
+  .heading, .loadingContainer {
+      display: none;
   }
 
   .a3FirstImage {  

@@ -1,0 +1,11 @@
+@media screen {
+    header {
+        display: block;
+    }     
+}
+
+@media screen {
+    header {
+        display: none;
+    }     
+}
