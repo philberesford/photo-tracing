@@ -15,27 +15,29 @@ const IndexPage = () => (
       </p>
       <p>
         To use the resizer:
-        <ol>
-          <li>Click the 'Browse...' button to choose a file that you want to resize to print as A3</li>
-          <li>Press the 'Print results' button to send it to your printer</li>
-        </ol>
       </p>
+      <ol>
+        <li>Click the 'Browse...' button to choose a file that you want to resize to print as A3</li>
+        <li>Press the 'Print results' button to send it to your printer</li>
+      </ol>      
     </div>
     <ImagePicker />    
   </Layout>
 );
 
-const ImagePicker = () => {
+const ImagePicker = () => {  
   const [imgSrc, setImgSource] = useState(null as any);
   const [firstHalfSrc, setFirstHalfSource] = useState(null as any);
   const [secondHalfSrc, setSecondHalfSource] = useState(null as any);
+  const [transformState, setTransformState] = useState({transform: 'edges'} as any);
+
   const [printButtonClasses, setPrintButtonClasses] = useState(styles.visiblyhidden as any);
   
   const isLandscape = (width: number, height: number) => {
     return width > height;    
   };
 
-  const imageSelected = async (imageSource: any) => {   
+  const imageSelected = async (imageSource: any) => {       
     setImgSource(imageSource);
     
     const image = await imageTransform().load(imageSource);
@@ -72,14 +74,29 @@ const ImagePicker = () => {
     if (file) {
       reader.readAsDataURL(file);
     }
-};
+  };
 
+  const transformChanged = (newTransform: string) => {
+    const newState = {transform: newTransform};
+    setTransformState(newState);
+  };
+  
   return (
     <>
       <div className={styles.noprint}>
         <div className={styles.loader}>
           <div className="form-floating mb-3">
-            <input  className="form-control-file" type="file" onChange={fileChanged} />
+            <input className="form-control-file" type="file" onChange={fileChanged} />            
+          </div>
+          <div className="form-check form-check-inline">
+            <label htmlFor="findEdges" className="form-check-label">Find edges</label>
+            <input type="radio" id="findEdges" className="form-check-input" onChange={() => transformChanged('edges')} name="imageOptions" checked={transformState.transform == 'edges'} />
+          </div>  
+          <div className="form-check form-check-inline">
+            <label htmlFor="greyScale" className="form-check-label">Greyscale</label>
+            <input type="radio" id="greyScale" className="form-check-input" onChange={() => transformChanged('grey')} name="imageOptions" checked={transformState.transform == 'grey'} />
+          </div>
+          <div className="form-floating mb-3">
             <button className={printButtonClasses} onClick={() => window.print()}>Print result</button>
           </div>
           <br />
