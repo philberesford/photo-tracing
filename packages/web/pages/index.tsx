@@ -25,40 +25,43 @@ const IndexPage = () => (
   </Layout>
 );
 
-const ImagePicker = () => {  
+const ImagePicker = () => { 
   const [imgSrc, setImgSource] = useState(null as any);
   const [firstHalfSrc, setFirstHalfSource] = useState(null as any);
   const [secondHalfSrc, setSecondHalfSource] = useState(null as any);
-  const [transformState, setTransformState] = useState({transform: 'edges'} as any);
-
+  const [transformState, setTransformState] = useState('edges' as any);
+  
   const [printButtonClasses, setPrintButtonClasses] = useState(styles.visiblyhidden as any);
   
   const isLandscape = (width: number, height: number) => {
     return width > height;    
   };
 
-  const imageSelected = async (imageSource: any) => {       
-    setImgSource(imageSource);
-    
-    const image = await imageTransform().load(imageSource);
+  const imageSelected = async (imageSource: any, transform: string) => { 
+    let image = imgSrc;
+    if (imageSource) {
+      setImgSource(imageSource);    
+      image = await imageTransform().load(imageSource);
+    } else if (imgSrc) {
+      image = await imageTransform().load(imgSrc);  // Else get it from the current state. TODO. This is disgusting!
+    } else {
+      return; // No image to operate on.
+    }   
 
     const { width, height } = image.meta();
-
-    const edges = image.findEdges()
-                       .invert()
-                       .toImage()
-
+    const outputImage = (transform === 'edges') ? image.findEdges().invert().toImage() : image.toGrey().toImage();
+    
     let firstHalf = "";
     let secondHalf = "";
 
     if (isLandscape(width, height)) {
-      const midPoint = edges.width/2;
-      firstHalf = edges.crop({width: midPoint}).toDataURL();                                           
-      secondHalf = edges.crop({x: midPoint}).toDataURL();                                           
+      const midPoint = outputImage.width/2;
+      firstHalf = outputImage.crop({width: midPoint}).toDataURL();                                           
+      secondHalf = outputImage.crop({x: midPoint}).toDataURL();                                           
     } else {
-      const midPoint = edges.height/2;
-      firstHalf = edges.crop({height: midPoint}).toDataURL();                                           
-      secondHalf = edges.crop({y: midPoint}).toDataURL();
+      const midPoint = outputImage.height/2;
+      firstHalf = outputImage.crop({height: midPoint}).toDataURL();                                           
+      secondHalf = outputImage.crop({y: midPoint}).toDataURL();
     }
 
     setPrintButtonClasses({});
@@ -69,16 +72,16 @@ const ImagePicker = () => {
   const fileChanged = (args: any) => { 
     const file = (args.target?.files && args.target?.files.length > 0) ? args.target?.files[0] : null; 
     const reader = new FileReader();
-    reader.addEventListener("load", () => imageSelected(reader.result), false);
+    reader.addEventListener("load", () => imageSelected(reader.result, transformState), false);
 
     if (file) {
       reader.readAsDataURL(file);
     }
   };
 
-  const transformChanged = (newTransform: string) => {
-    const newState = {transform: newTransform};
-    setTransformState(newState);
+  const transformChanged = (transform: string) => {
+    setTransformState(transform); 
+    imageSelected(null, transform);   
   };
   
   return (
@@ -90,11 +93,11 @@ const ImagePicker = () => {
           </div>
           <div className="form-check form-check-inline">
             <label htmlFor="findEdges" className="form-check-label">Find edges</label>
-            <input type="radio" id="findEdges" className="form-check-input" onChange={() => transformChanged('edges')} name="imageOptions" checked={transformState.transform == 'edges'} />
+            <input type="radio" id="findEdges" className="form-check-input" onChange={() => transformChanged('edges')} name="imageOptions" checked={transformState == 'edges'} />
           </div>  
           <div className="form-check form-check-inline">
             <label htmlFor="greyScale" className="form-check-label">Greyscale</label>
-            <input type="radio" id="greyScale" className="form-check-input" onChange={() => transformChanged('grey')} name="imageOptions" checked={transformState.transform == 'grey'} />
+            <input type="radio" id="greyScale" className="form-check-input" onChange={() => transformChanged('grey')} name="imageOptions" checked={transformState == 'grey'} />
           </div>
           <div className="form-floating mb-3">
             <button className={printButtonClasses} onClick={() => window.print()}>Print result</button>
