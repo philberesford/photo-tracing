@@ -9,6 +9,17 @@ const IndexPage = () => (
   <Layout title="Photo tracing">
     <div className={styles.noprint}>
       <h1>Photo tracing</h1>
+      <p>
+        This app can be used to take an image that you have saved, and resize it to A3 but is printable using a standard A4 printer.
+        All you'll need to do is tape the two printed images together using scellotape.
+      </p>
+      <p>
+        To use the resizer:
+        <ol>
+          <li>Click the 'Browse...' button to choose a file that you want to resize to print as A3</li>
+          <li>Press the 'Print results' button to send it to your printer</li>
+        </ol>
+      </p>
     </div>
     <ImagePicker />    
   </Layout>
@@ -67,12 +78,15 @@ const ImagePicker = () => {
     <>
       <div className={styles.noprint}>
         <div className={styles.loader}>
-          <input type="file" onChange={fileChanged} /><button className={printButtonClasses} onClick={() => window.print()}>Print result</button>
+          <div className="form-floating mb-3">
+            <input  className="form-control-file" type="file" onChange={fileChanged} />
+            <button className={printButtonClasses} onClick={() => window.print()}>Print result</button>
+          </div>
           <br />
-          <br />          
+          <br />
+                    
           <img src={imgSrc} style={{height: 200}} alt="" />
         </div>        
-        
       </div>
       <div className="results">      
         <div className={styles.printedPage} style={{height: PaperDimensions.A4.height/2+'mm'}}>
